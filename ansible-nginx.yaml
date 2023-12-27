@@ -7,6 +7,7 @@
     - name: Delete Kubernetes resource
       command: kubectl delete -f /home/kmaster/nginx-app/nginx.yaml
       become_user: kmaster
+      ignore_errors: yes
     - name: create Kubernetes resource
       command: kubectl apply -f /home/kmaster/nginx-app/nginx.yaml
       become_user: kmaster
