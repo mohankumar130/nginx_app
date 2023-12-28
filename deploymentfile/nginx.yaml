@@ -1,33 +1,35 @@
-apiVersion: apps/v1
 kind: Deployment
+apiVersion: apps/v1
 metadata:
-  name: nginx-deployment
+   name: nginx
 spec:
-  replicas: 1
-  selector:
+   replicas: 2
+   selector:      # tells the controller which pods to watch/belong to
     matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      containers:
-      - name: nginx
-        image: msy061618/nginx-app
-        ports:
-        - containerPort: 80
+     app: nginx
+   template:
+      metadata:
+        labels:
+          app: nginx
+      spec:
+       containers:
+        - name: nginx
+          image: msy061618/nginx-app
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 80
 ---
+kind: Service                             
 apiVersion: v1
-kind: Service
 metadata:
   name: nginx-service
-spec:
-  selector:
+  labels:
     app: nginx
+spec:
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-      
-  type: NodePort
+    - port: 8080                               
+      targetPort: 80                    
+      nodePort: 31200
+  selector:
+    app: nginx                    
+  type: LoadBalancer                   
