@@ -3,7 +3,7 @@ apiVersion: apps/v1
 metadata:
    name: nginx
 spec:
-   replicas: 2
+   replicas: 1
    selector:      # tells the controller which pods to watch/belong to
     matchLabels:
      app: nginx
@@ -32,4 +32,4 @@ spec:
       nodePort: 31200
   selector:
     app: nginx                    
-  type: LoadBalancer                   
+  type: NodePort                   
